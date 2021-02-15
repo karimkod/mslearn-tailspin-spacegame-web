@@ -50,9 +50,9 @@ steps:
   displayName: "Run Unit tests - $(buildConfiguration)"
   inputs:
     command: 'test'
-    arguments: '--configuration $(buildConfiguration) --no-build --logger "trx;$(Build.ArtifactStagingDirectory)/buildTest"'
-    projects: '**/*.Tests.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-build'
     publishTestResults: true
+    projects: '**/*.Tests.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'

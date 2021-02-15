@@ -9,6 +9,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
+  testProject: 'Tailspin.Spacegame.Web.Tests'
   dotnetSdkVersion: '3.1.300'
 
 steps:
@@ -44,6 +45,14 @@ steps:
     command: 'build'
     arguments: '--no-restore --configuration $(buildConfiguration)'
     projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: "Run Unit tests - $(buildConfiguration)"
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration) --no-build --logger "trx;$(Build.ArtifactStagingDirectory)/buildTest"'
+    projects: '**/*.Tests.csproj'
+    publishTestResults: true
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'
